@@ -6,8 +6,8 @@ from adafruit_motor import servo
 class Motors:
     MIN_ANGLE = -20
     MAX_ANGLE = 22
-    MIN_PWM = 4600
-    MAX_PWM = 4850
+    MIN_PWM = 5000
+    MAX_PWM = 6000
     DELTA_PWM = (MAX_PWM - MIN_PWM) / 100.0
 
     def __init__(self, freq = 50, dc_ch=0, servo_ch=1):
@@ -53,21 +53,22 @@ class Motors:
         self.pca.channels[self.dc_ch].duty_cycle = 0 
 
     def dc_calibration(self):
-        '''f = 50Hz -> T = 20mS. Theoretical range of ESC is between 1 to 2mS.
-        However it requires examination
+        '''PWM ESCs use a periodic input pulse of width typically between 1mS and 2mS for
+        zero to full power, respectively.The frame rate of these pulses is usually between 
+        50Hz to 490Hz. f = 50Hz -> T = 20mS.
         '''
-        for i in range(Motors.MIN_PWM, Motors.MAX_PWM): 
+        for i in range(Motors.MIN_PWM, Motors.MAX_PWM, 10): 
             self.pca.channels[self.dc_ch].duty_cycle = i 
             print("Duty value: {}".format(i))
             time.sleep(0.2)
 
-motors = Motors()
+#motors = Motors()
 #motors.servo_angle(0)
 #motors.servo_calibration()
-motors.dc_calibration()
+#motors.dc_calibration()
 #motors.velocity(50)
 #time.sleep(3)
-motors.stop_dc()
+#motors.stop_dc()
 
 
 
