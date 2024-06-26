@@ -40,7 +40,6 @@ class Motors:
     def velocity(self, v=0):
         '''Theoretical range: 0-100'''
         pwmvalue = Motors.MIN_PWM + int(v * Motors.DELTA_PWM)
-        print(pwmvalue)
         self.pca.channels[self.dc_ch].duty_cycle = pwmvalue
             
     def servo_calibration(self):
