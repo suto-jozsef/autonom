@@ -1,7 +1,13 @@
 # Encoder
 
 ## Hall sensors
+When a thin conductor (or semiconductor) has a steady flow of current running through it and a magnet is placed so that its magnetic 
+field runs perpendicular to this current, the magnetic field of the current reacts to the magnetic field of the permanent magnet, 
+causing the electrons flowing through the conductor to be pulled to one side of the conductor, due to the Lorentz force. 
+This creates a potential difference, referred to as Hall voltage, in the conductor. The magnitude of the Hall voltage is 
+proportional to the strength of the magnetic field.
 
+![hall effect](path/to/my-image.png)
 
 ## [Pulse counting algorithm](https://www.motioncontroltips.com/how-are-encoders-used-for-speed-measurement/)
 
