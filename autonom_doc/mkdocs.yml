@@ -1,4 +1,5 @@
 site_name: My Docs
 nav:
  - Home: index.md
- - Marvelmind: marvel.md 
+ - Encoder: encoder.md
+theme: readthedocs 
