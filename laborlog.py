@@ -22,7 +22,8 @@ def remap(oldvalue, oldmax, oldmin, newmax, newmin):
 pads = inputs.devices.gamepads
 PROGRAM_LOOP = True
 VERBOSE = False
-dc_pwm = 55
+dc_pwm = 35
+servo_angle = 0
 
 #speedavg = MovingAvg(1)
 #angleavg = MovingAvg(1)
@@ -54,11 +55,11 @@ while PROGRAM_LOOP:
     encoder.start()
 
     while LOOP:
-         # read inertial data
+        # read inertial data
         accel = mpu.get_accel_data()
         gyro = mpu.get_gyro_data()
 
-        # read velocity from encoder
+        # # read velocity from encoder
         velocity = encoder.get_velocity()
 
         if LOG:
@@ -94,6 +95,13 @@ while PROGRAM_LOOP:
                     dc_pwm -= 5
                 motors.velocity(dc_pwm)
                 if VERBOSE: print("[INFO] dc pwm: {}".format(dc_pwm))
+            elif event.code == "ABS_HAT0X":
+                if int(event.state) == -1 and servo_angle < 15:
+                    servo_angle += 1
+                elif int(event.state) == 1 and servo_angle >= -15:
+                    servo_angle -= 1
+                motors.servo_angle(servo_angle)
+                if VERBOSE: print("[INFO] angle: {}".format(servo_angle))
             # start data acquisition with fixed pwm rate
             elif event.code == "ABS_Y":
                 joyvalue = int(event.state) - 128
@@ -115,8 +123,8 @@ while PROGRAM_LOOP:
     print("[INFO] distance: {:.2f}, {:.2f} m".format(encoder.get_distance_from_velocity(), encoder.get_distance_from_pulses()))
     print("[INFO] # pulses: {}".format(encoder.get_total_pulses()))
     print("[INFO] cycle time: {:.2f} s".format(time.time() - cycle_start))
-    file.write("{:.1f}, {:.1f}\n".format(encoder.get_avgvelocity(), encoder.get_distance_from_velocity()))
+    file.write("{:.1f}, {:.1f}, {}\n".format(encoder.get_avgvelocity(), encoder.get_distance_from_velocity(), 
+                                             encoder.get_total_pulses()))
     file.close()
     encoder.stop() 
- 
 print("[INFO] End of program")
