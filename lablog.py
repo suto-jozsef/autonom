@@ -11,7 +11,7 @@ from pca9685 import Motors
 from mpu6050 import MPU6050
 from encoder import Encoder
 
-dc_pwm = 90
+dc_pwm = 60
 loopcount = 0
 
 motors = Motors()
