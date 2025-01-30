@@ -12,6 +12,7 @@ class GPS_Thread:
         self.longi = None
         self.speed = None
         self.altitude = None
+        self.received_messages = 0
         self.uart = serial.Serial("/dev/ttyS0", baudrate=baud, bytesize=serial.EIGHTBITS,parity=serial.PARITY_NONE,
                                   stopbits=serial.STOPBITS_ONE, timeout=1)
         self.capture_thread = threading.Thread(target=self.read_message)
@@ -32,6 +33,8 @@ class GPS_Thread:
             inbytes = self.uart.read_until()
             if inbytes is not None and len(inbytes) > 0:
                 if chr(inbytes[0]) == '$' and self.check_crc(inbytes):
+                    self.received_messages += 1
+                    
                     try:
                         message = inbytes.decode("utf8")
                         message_type = message[3:6]

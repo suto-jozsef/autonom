@@ -22,6 +22,7 @@ cam = MyCamera()
 mpu = MPU6050(0x68)
 
 gps.start()
+print("[INFO] GSP will turn on after 5 seconds... ")
 time.sleep(5)
 
 # make an image directory
