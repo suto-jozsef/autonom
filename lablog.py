@@ -11,7 +11,7 @@ from pca9685 import Motors
 from mpu6050 import MPU6050
 from encoder import Encoder
 
-dc_pwm = 62
+dc_pwm = 78
 loopcount = 0
 
 motors = Motors()
@@ -29,7 +29,7 @@ encoder = Encoder(pin = 16, st = 1.0)
 encoder.start()
 
 print("[INFO] Start driving...")
-motors.servo_angle(-0.6)
+motors.servo_angle(-0.63)
 motors.velocity(dc_pwm)
 
 try:
